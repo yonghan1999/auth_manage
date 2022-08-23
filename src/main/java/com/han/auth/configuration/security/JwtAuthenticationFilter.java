@@ -41,7 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, roles);
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         } catch (Exception e) {
-            logger.error("无法验证令牌");
+            logger.error(SystemCode.AccessTokenError.getMessage());
         }
         filterChain.doFilter(request, response);
     }

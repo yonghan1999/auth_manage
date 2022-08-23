@@ -1,5 +1,6 @@
 package com.han.auth.configuration.security;
 
+import com.han.auth.base.SystemCode;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -39,7 +40,7 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
             }
         }
         //登录却没有相应权限
-        throw new AccessDeniedException("权限不足，无法访问");
+        throw new AccessDeniedException(SystemCode.AccessDenied.getMessage());
     }
 
     @Override

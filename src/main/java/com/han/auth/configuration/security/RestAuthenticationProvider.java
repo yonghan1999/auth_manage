@@ -1,6 +1,7 @@
 package com.han.auth.configuration.security;
 
 
+import com.han.auth.base.SystemCode;
 import com.han.auth.services.AuthenticationService;
 import com.han.auth.services.UserRoleService;
 import com.han.auth.services.UserService;
@@ -37,21 +38,21 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
         String password = (String) authentication.getCredentials();
         com.han.auth.entity.User user = userService.getUserByUserName(username);
         if (user == null) {
-            throw new UsernameNotFoundException("用户名或密码错误");
+            throw new UsernameNotFoundException(SystemCode.AuthError.getMessage());
         }
 
         boolean result = authenticationService.authUser(user, username, password);
         if (!user.getIsAccountNonLocked()) {
-            throw new LockedException("用户被禁用");
+            throw new LockedException(SystemCode.AccountLocked.getMessage());
         }
         else if(!user.getIsAccountNonExpired()) {
-            throw  new AccountExpiredException("账户过期");
+            throw  new AccountExpiredException(SystemCode.AccountExpired.getMessage());
         }
         else if (!user.getIsCredentialsNonExpired()) {
-            throw new CredentialsExpiredException("凭证已过期");
+            throw new CredentialsExpiredException(SystemCode.AccessTokenError.getMessage());
         }
         else if (!result) {
-            throw new BadCredentialsException("用户名或密码错误");
+            throw new BadCredentialsException(SystemCode.AuthError.getMessage());
         }
 
         ArrayList<GrantedAuthority> grantedAuthorities = new ArrayList<>();

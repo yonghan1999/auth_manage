@@ -27,6 +27,7 @@ public class RestUtil {
         try {
             RestResponse res = new RestResponse<>(systemCode, msg, content);
             String resStr = JsonUtil.toJsonStr(res);
+            response.setStatus(systemCode);
             response.setContentType("application/json;charset=utf-8");
             response.getWriter().write(resStr);
         } catch (IOException e) {

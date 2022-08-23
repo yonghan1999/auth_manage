@@ -2,16 +2,17 @@ package com.han.auth.configuration.security;
 
 
 public class AuthenticationBean {
-    private String userName;
+    private String username;
     private String password;
     private boolean remember;
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public AuthenticationBean setUsername(String username) {
+        this.username = username;
+        return this;
     }
 
     public String getPassword() {
