@@ -1,6 +1,9 @@
 spring:
   datasource:
-
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://demo.nullptr.work:3306/auth?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+    username: auth
+    password: pyNSfrXG6LY5B4mB
 
     hikari:
       minimum-idle: 5
