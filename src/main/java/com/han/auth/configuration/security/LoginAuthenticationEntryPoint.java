@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.han.auth.configuration.property.SystemCofing.LOGIN_ENTRY_POINTER;
+import static com.han.auth.configuration.property.SystemConfig.LOGIN_ENTRY_POINTER;
 
 @Component
 public final class LoginAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint {

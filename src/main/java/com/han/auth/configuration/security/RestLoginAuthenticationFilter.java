@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static com.han.auth.configuration.property.SystemCofing.LOGIN_ENTRY_POINTER;
+import static com.han.auth.configuration.property.SystemConfig.LOGIN_ENTRY_POINTER;
 
 public class RestLoginAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 

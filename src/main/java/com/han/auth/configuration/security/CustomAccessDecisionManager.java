@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
-import static com.han.auth.configuration.property.SystemCofing.ANONYMOUS_USER_ROLE;
+import static com.han.auth.configuration.property.SystemConfig.ANONYMOUS_USER_ROLE;
 
 @Component
 public class CustomAccessDecisionManager implements AccessDecisionManager {

@@ -75,6 +75,10 @@ public class JwtTokenUtils {
         return roleList;
     }
 
+    public static String getAppName(String token){
+        return getTokenBody(token).get(APP_NAME).asString();
+    }
+
 
     private static Map<String, Claim> getTokenBody(String token){
         Map<String, Claim> claims = null;

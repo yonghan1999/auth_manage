@@ -1,6 +1,7 @@
 package com.han.auth.configuration.security;
 
 import com.han.auth.base.SystemCode;
+import com.han.auth.configuration.property.SystemConfig;
 import com.han.auth.entity.Role;
 import com.han.auth.utils.JwtTokenUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,6 +28,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         try {
             String token = tokenHeader.replace(JwtTokenUtils.TOKEN_PREFIX, "");
+            String appName = JwtTokenUtils.getAppName(token);
+            if (appName == null || !appName.equals(SystemConfig.DashboardName)) {
+                filterChain.doFilter(request, response);
+                return;
+            }
             String username = JwtTokenUtils.getUserName(token);
             List<Role> roleList = JwtTokenUtils.getUserRole(token);
             List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
