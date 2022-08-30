@@ -10,7 +10,7 @@
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
         <!--数据库链接URL，用户名、密码 -->
-        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/auth?serverTimezone=GMT%2B8&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false" userId="root" password="123456">
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver" connectionURL="jdbc:mysql://demo.nullptr.work:3306/auth?characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=UTC&amp;rewriteBatchedStatements=true" userId="auth" password="pyNSfrXG6LY5B4mB">
             <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
         <javaTypeResolver>
@@ -34,11 +34,7 @@
             &lt;!&ndash;去掉前缀 "t_" &ndash;&gt;
             <domainObjectRenamingRule searchString="^T" replaceString="" />
         </table>-->
-        <table tableName="t_role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-            <!--去掉前缀 "t_" -->
-            <domainObjectRenamingRule searchString="^T" replaceString="" />
-        </table>
-        <table tableName="t_user_role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+        <table tableName="t_app_role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
             <!--去掉前缀 "t_" -->
             <domainObjectRenamingRule searchString="^T" replaceString="" />
         </table>

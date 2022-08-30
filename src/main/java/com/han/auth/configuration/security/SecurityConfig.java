@@ -1,7 +1,6 @@
 package com.han.auth.configuration.security;
 
 
-import com.han.auth.configuration.property.CookieConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +29,7 @@ public class SecurityConfig {
 
         private final RestAuthenticationFailureHandler restAuthenticationFailureHandler;
         private final RestAuthenticationSuccessHandler restAuthenticationSuccessHandler;
-        private final RestDetailsServiceImpl formDetailsService;
+//        private final RestDetailsServiceImpl formDetailsService;
         private final LoginAuthenticationEntryPoint loginAuthenticationEntryPoint;
         private final RestAuthenticationProvider restAuthenticationProvider;
         private final RestAccessDeniedHandler restAccessDeniedHandler;
@@ -41,10 +40,9 @@ public class SecurityConfig {
         private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
         @Autowired
-        public SecurityConfigurerAdapter(RestAuthenticationFailureHandler restAuthenticationFailureHandler, RestAuthenticationSuccessHandler restAuthenticationSuccessHandler, RestDetailsServiceImpl formDetailsService, LoginAuthenticationEntryPoint loginAuthenticationEntryPoint, RestAuthenticationProvider restAuthenticationProvider, RestAccessDeniedHandler restAccessDeniedHandler, RestLogoutSuccessHandler restLogoutSuccessHandler, CustomFilterInvocationSecurityMetadataSource customFilterInvocationSecurityMetadataSource, CustomAccessDecisionManager customAccessDecisionManager, JwtAccessDeniedHandler jwtAccessDeniedHandler, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
+        public SecurityConfigurerAdapter(RestAuthenticationFailureHandler restAuthenticationFailureHandler, RestAuthenticationSuccessHandler restAuthenticationSuccessHandler, LoginAuthenticationEntryPoint loginAuthenticationEntryPoint, RestAuthenticationProvider restAuthenticationProvider, RestAccessDeniedHandler restAccessDeniedHandler, RestLogoutSuccessHandler restLogoutSuccessHandler, CustomFilterInvocationSecurityMetadataSource customFilterInvocationSecurityMetadataSource, CustomAccessDecisionManager customAccessDecisionManager, JwtAccessDeniedHandler jwtAccessDeniedHandler, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
             this.restAuthenticationFailureHandler = restAuthenticationFailureHandler;
             this.restAuthenticationSuccessHandler = restAuthenticationSuccessHandler;
-            this.formDetailsService = formDetailsService;
             this.loginAuthenticationEntryPoint = loginAuthenticationEntryPoint;
             this.restAuthenticationProvider = restAuthenticationProvider;
             this.restAccessDeniedHandler = restAccessDeniedHandler;
@@ -102,7 +100,6 @@ public class SecurityConfig {
                     .and().exceptionHandling().accessDeniedHandler(restAccessDeniedHandler)
                     .and().formLogin().successHandler(restAuthenticationSuccessHandler).failureHandler(restAuthenticationFailureHandler)
                     .and().logout().logoutUrl("/api/user/logout").logoutSuccessHandler(restLogoutSuccessHandler).invalidateHttpSession(true)
-                    .and().rememberMe().key(CookieConfig.getName()).tokenValiditySeconds(CookieConfig.getInterval()).userDetailsService(formDetailsService)
                     .and().csrf().disable()
                     .cors();
         }
@@ -128,7 +125,7 @@ public class SecurityConfig {
             authenticationFilter.setAuthenticationSuccessHandler(restAuthenticationSuccessHandler);
             authenticationFilter.setAuthenticationFailureHandler(restAuthenticationFailureHandler);
             authenticationFilter.setAuthenticationManager(authenticationManagerBean());
-            authenticationFilter.setUserDetailsService(formDetailsService);
+//            authenticationFilter.setUserDetailsService(formDetailsService);
             return authenticationFilter;
         }
     }

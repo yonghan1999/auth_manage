@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.han.auth.configuration.property.TokenConfig;
 import com.han.auth.entity.Role;
 import org.passay.CharacterData;
 import org.passay.CharacterRule;
@@ -24,15 +25,17 @@ public class JwtTokenUtils {
     private static final Long LONG_EXPIRATION = 60 * 1000 * 60 * 24 * 7L; //一个星期
     private static final String SECRET = "Fm8oXFUSIrRDDC7VH3ccImCcNzLlQNgy";
     private static final String ISSUER = "com.han.auth";
+    private static final String APP_NAME = TokenConfig.getAppNameFieldName();
     private static final String ROLE = "role";
     private static final String USERNAME = "username";
     private static final Algorithm ALGORITHM = Algorithm.HMAC256(SECRET);
 
     //创建token
-    public static String createToken(String username, List<String> roles){
+    public static String createToken(String username, List<String> roles, String appName){
         return JWT.create()
                 .withClaim(USERNAME,username)
                 .withClaim(ROLE,roles)
+                .withClaim(APP_NAME,appName)
                 .withIssuer(ISSUER)
                 .withIssuedAt(new Date(System.currentTimeMillis()))
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION))
@@ -70,7 +73,6 @@ public class JwtTokenUtils {
             roleList.add(role);
         });
         return roleList;
-
     }
 
 

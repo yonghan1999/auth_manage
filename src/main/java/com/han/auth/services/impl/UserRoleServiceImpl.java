@@ -1,17 +1,14 @@
 package com.han.auth.services.impl;
 
-import com.han.auth.entity.Role;
-import com.han.auth.entity.User;
-import com.han.auth.entity.UserRole;
-import com.han.auth.mapper.RoleMapper;
-import com.han.auth.mapper.UserMapper;
-import com.han.auth.mapper.UserRoleMapper;
+import com.han.auth.entity.*;
+import com.han.auth.mapper.*;
 import com.han.auth.services.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserRoleServiceImpl implements UserRoleService {
@@ -19,29 +16,41 @@ public class UserRoleServiceImpl implements UserRoleService {
     private final UserMapper userMapper;
     private final RoleMapper roleMapper;
     private final UserRoleMapper userRoleMapper;
+    private final AppMapper appMapper;
+    private final AppRoleMapper appRoleMapper;
 
     @Autowired
-    public UserRoleServiceImpl(UserMapper userMapper, RoleMapper roleMapper, UserRoleMapper userRoleMapper) {
+    public UserRoleServiceImpl(UserMapper userMapper, RoleMapper roleMapper, UserRoleMapper userRoleMapper, AppMapper appMapper, AppRoleMapper appRoleMapper) {
         this.userMapper = userMapper;
         this.roleMapper = roleMapper;
         this.userRoleMapper = userRoleMapper;
+        this.appMapper = appMapper;
+        this.appRoleMapper = appRoleMapper;
     }
 
 
     @Override
-    public List<Role> getUserRole(User user) {
-        List<UserRole> userRoleList = userRoleMapper.selectByUid(user.getId());
+    public List<Role> getUserRole(User user, String appName) {
         List<Role> roleList = new ArrayList<>();
+        App app = appMapper.getByName(appName);
+        if (app == null) {
+            return roleList;
+        }
+        List<AppRole> appRoles = appRoleMapper.getByAppId(app.getId());
+        List<Integer> roleIdList = appRoles.stream().map(AppRole::getRoleId).collect(Collectors.toList());
+        List<UserRole> userRoleList = userRoleMapper.selectByUid(user.getId());
         userRoleList.forEach(item -> {
-            roleList.add(roleMapper.selectByPrimaryKey(item.getRid()));
+            if(roleIdList.contains(item.getRid())) {
+                roleList.add(roleMapper.selectByPrimaryKey(item.getRid()));
+            }
         });
         return roleList;
     }
 
     @Override
-    public List<String> getUserRoleName(User user) {
-        List<Role> roleList = getUserRole(user);
+    public List<String> getUserRoleName(User user, String appName) {
         List<String> listRoleName = new ArrayList<>();
+        List<Role> roleList = getUserRole(user, appName);
         roleList.forEach(item -> {
             listRoleName.add(item.getName());
         });

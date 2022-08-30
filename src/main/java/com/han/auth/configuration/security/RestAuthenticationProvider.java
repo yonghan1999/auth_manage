@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 @Component
@@ -36,8 +37,9 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
+        AuthenticationDetail details = (AuthenticationDetail) authentication.getDetails();
         com.han.auth.entity.User user = userService.getUserByUserName(username);
-        if (user == null) {
+        if (user == null || details.getAppName() == null) {
             throw new UsernameNotFoundException(SystemCode.AuthError.getMessage());
         }
 
@@ -56,7 +58,7 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
         }
 
         ArrayList<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        userRoleService.getUserRole(user).forEach(item -> {
+        userRoleService.getUserRole(user,details.getAppName()).forEach(item -> {
             grantedAuthorities.add(new SimpleGrantedAuthority(item.getName()));
         });
 

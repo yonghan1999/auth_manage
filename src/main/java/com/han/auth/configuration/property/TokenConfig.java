@@ -1,6 +1,6 @@
 package com.han.auth.configuration.property;
 
-public class CookieConfig {
+public class TokenConfig {
 
     public static String getName() {
         return "auth_config";
@@ -8,5 +8,9 @@ public class CookieConfig {
 
     public static Integer getInterval() {
         return 30 * 24 * 60 * 60;
+    }
+
+    public static String getAppNameFieldName() {
+        return "App-Name";
     }
 }

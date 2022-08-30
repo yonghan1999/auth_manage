@@ -32,6 +32,7 @@ public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         User springUser = (User) authentication.getPrincipal();
+        AuthenticationDetail detail = (AuthenticationDetail) authentication.getDetails();
         com.han.auth.entity.User user = userService.getUserByUserName(springUser.getUsername());
         com.han.auth.entity.User newUser = new com.han.auth.entity.User();
         newUser.setUsername(user.getUsername());
@@ -41,7 +42,7 @@ public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
         });
         Map<String, Object> map = new HashMap<>();
 //        map.put("user", newUser);
-        map.put(JwtTokenUtils.TOKEN_HEADER, JwtTokenUtils.TOKEN_PREFIX + JwtTokenUtils.createToken(newUser.getUsername(), roleList));
+        map.put(JwtTokenUtils.TOKEN_HEADER, JwtTokenUtils.TOKEN_PREFIX + JwtTokenUtils.createToken(newUser.getUsername(), roleList, detail.getAppName()));
         RestUtil.response(response, SystemCode.OK.getCode(), SystemCode.OK.getMessage(), map);
     }
 }
