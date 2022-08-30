@@ -6,6 +6,6 @@ public interface SystemConfig {
 
     String LOGIN_ENTRY_POINTER = "/api/user/login";
 
-    String DashboardName = "admin";
+    String DASHBOARD_NAME = "com.han.auth";
 
 }

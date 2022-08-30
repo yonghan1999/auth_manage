@@ -7,7 +7,6 @@ import com.han.auth.utils.JwtTokenUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -29,7 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             String token = tokenHeader.replace(JwtTokenUtils.TOKEN_PREFIX, "");
             String appName = JwtTokenUtils.getAppName(token);
-            if (appName == null || !appName.equals(SystemConfig.DashboardName)) {
+            if (appName == null || !appName.equals(SystemConfig.DASHBOARD_NAME)) {
                 filterChain.doFilter(request, response);
                 return;
             }

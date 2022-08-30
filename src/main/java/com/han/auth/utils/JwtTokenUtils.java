@@ -12,6 +12,8 @@ import org.passay.CharacterData;
 import org.passay.CharacterRule;
 import org.passay.EnglishCharacterData;
 import org.passay.PasswordGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -30,12 +32,14 @@ public class JwtTokenUtils {
     private static final String USERNAME = "username";
     private static final Algorithm ALGORITHM = Algorithm.HMAC256(SECRET);
 
+    private static final Logger logger = LoggerFactory.getLogger(JwtTokenUtils.class);
+
     //创建token
-    public static String createToken(String username, List<String> roles, String appName){
+    public static String createToken(String username, List<String> roles, String appName) {
         return JWT.create()
-                .withClaim(USERNAME,username)
-                .withClaim(ROLE,roles)
-                .withClaim(APP_NAME,appName)
+                .withClaim(USERNAME, username)
+                .withClaim(ROLE, roles)
+                .withClaim(APP_NAME, appName)
                 .withIssuer(ISSUER)
                 .withIssuedAt(new Date(System.currentTimeMillis()))
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION))
@@ -43,10 +47,10 @@ public class JwtTokenUtils {
     }
 
     //创建token
-    public static String createTokenWithLongTime(String username, List<String> roles){
+    public static String createTokenWithLongTime(String username, List<String> roles) {
         return JWT.create()
-                .withClaim(USERNAME,username)
-                .withClaim(ROLE,roles)
+                .withClaim(USERNAME, username)
+                .withClaim(ROLE, roles)
                 .withIssuer(ISSUER)
                 .withIssuedAt(new Date(System.currentTimeMillis()))
                 .withExpiresAt(new Date(System.currentTimeMillis() + LONG_EXPIRATION))
@@ -54,17 +58,17 @@ public class JwtTokenUtils {
     }
 
     //从token中获取用户名(此处的token是指去掉前缀之后的)
-    public static String getUserName(String token){
+    public static String getUserName(String token) {
         String username;
         try {
             username = getTokenBody(token).get(USERNAME).asString();
-        } catch (Exception e){
+        } catch (Exception e) {
             username = null;
         }
         return username;
     }
 
-    public static List<Role> getUserRole(String token){
+    public static List<Role> getUserRole(String token) {
         List<String> roles = getTokenBody(token).get(ROLE).asList(String.class);
         List<Role> roleList = new ArrayList<>();
         roles.forEach(item -> {
@@ -75,19 +79,19 @@ public class JwtTokenUtils {
         return roleList;
     }
 
-    public static String getAppName(String token){
+    public static String getAppName(String token) {
         return getTokenBody(token).get(APP_NAME).asString();
     }
 
 
-    private static Map<String, Claim> getTokenBody(String token){
+    private static Map<String, Claim> getTokenBody(String token) {
         Map<String, Claim> claims = null;
         JWTVerifier jwtVerifier = JWT.require(ALGORITHM).withIssuer(ISSUER).build();
-        try{
+        try {
             DecodedJWT decodedJWT = jwtVerifier.verify(token);
             claims = JWT.decode(token).getClaims();
-        } catch(Exception e){
-            new JWTVerificationException("无法验证令牌");
+        } catch (Exception e) {
+            logger.info("无法验证令牌：" + e.getMessage(), e);
         }
         return claims;
     }
