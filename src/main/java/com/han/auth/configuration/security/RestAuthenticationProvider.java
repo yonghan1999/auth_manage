@@ -37,7 +37,14 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
-        AuthenticationDetail details = (AuthenticationDetail) authentication.getDetails();
+        AuthenticationDetail details = null;
+        Object data = authentication.getDetails();
+        if (data instanceof AuthenticationDetail) {
+            details = (AuthenticationDetail) data;
+        }
+        else {
+            throw new ProviderNotFoundException(SystemCode.AccessDenied.getMessage());
+        }
         com.han.auth.entity.User user = userService.getUserByUserName(username);
         if (user == null || details.getAppName() == null) {
             throw new UsernameNotFoundException(SystemCode.AuthError.getMessage());

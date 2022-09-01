@@ -1,6 +1,7 @@
 package com.han.auth.configuration.security;
 
 
+import com.han.auth.base.ResponseType;
 import com.han.auth.base.RestResponse;
 import com.han.auth.base.SystemCode;
 import com.han.auth.utils.JsonUtil;
@@ -25,7 +26,7 @@ public class RestUtil {
 
     public static void response(HttpServletResponse response, int systemCode, String msg, Object content) {
         try {
-            RestResponse res = new RestResponse<>(systemCode, msg, content);
+            RestResponse res = new RestResponse<>(systemCode, msg, content, ResponseType.SUCCESS);
             String resStr = JsonUtil.toJsonStr(res);
             response.setStatus(systemCode);
             response.setContentType("application/json;charset=utf-8");

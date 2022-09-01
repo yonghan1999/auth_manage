@@ -70,4 +70,17 @@ public class User {
     public void setIsEnable(Boolean isEnable) {
         this.isEnable = isEnable;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", isAccountNonLocked=" + isAccountNonLocked +
+                ", isAccountNonExpired=" + isAccountNonExpired +
+                ", isCredentialsNonExpired=" + isCredentialsNonExpired +
+                ", isEnable=" + isEnable +
+                '}';
+    }
 }

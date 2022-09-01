@@ -13,16 +13,48 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+
+class Role {
+    private String roleName;
+    private String value;
+
+    public Role(String roleName, String value) {
+        this.roleName = roleName;
+        this.value = value;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public Role setRoleName(String roleName) {
+        this.roleName = roleName;
+        return this;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public Role setValue(String value) {
+        this.value = value;
+        return this;
+    }
+}
 
 
 @Component
 public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final UserService userService;
+
+    private static final String token = "token";
+
+    private static final String userId = "userId";
+
+    private static final String roles = "roles";
 
     @Autowired
     public RestAuthenticationSuccessHandler(UserService userService) {
@@ -36,13 +68,24 @@ public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
         com.han.auth.entity.User user = userService.getUserByUserName(springUser.getUsername());
         com.han.auth.entity.User newUser = new com.han.auth.entity.User();
         newUser.setUsername(user.getUsername());
+        newUser.setId(user.getId());
         List<String> roleList = new ArrayList<>();
         authentication.getAuthorities().forEach(item -> {
             roleList.add(item.getAuthority());
         });
         Map<String, Object> map = new HashMap<>();
 //        map.put("user", newUser);
-        map.put(JwtTokenUtils.TOKEN_HEADER, JwtTokenUtils.TOKEN_PREFIX + JwtTokenUtils.createToken(newUser.getUsername(), roleList, detail.getAppName()));
+        map.put(token, JwtTokenUtils.TOKEN_PREFIX + JwtTokenUtils.createToken(newUser.getId(), newUser.getUsername(), roleList, detail.getAppName()));
+        map.put(userId, user.getId());
+
+        // roles
+//        List<Role> rolesField = new ArrayList<>();
+//        roleList.forEach(item -> {
+//            rolesField.add(new Role(item, item));
+//        });
+        map.put(roles, new Role("User","user"));
+
+
         RestUtil.response(response, SystemCode.OK.getCode(), SystemCode.OK.getMessage(), map);
     }
 }

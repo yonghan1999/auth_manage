@@ -30,16 +30,18 @@ public class JwtTokenUtils {
     private static final String APP_NAME = TokenConfig.getAppNameFieldName();
     private static final String ROLE = "role";
     private static final String USERNAME = "username";
+    private static final String USER_ID = "userId";
     private static final Algorithm ALGORITHM = Algorithm.HMAC256(SECRET);
 
     private static final Logger logger = LoggerFactory.getLogger(JwtTokenUtils.class);
 
     //创建token
-    public static String createToken(String username, List<String> roles, String appName) {
+    public static String createToken(int id,String username, List<String> roles, String appName) {
         return JWT.create()
                 .withClaim(USERNAME, username)
                 .withClaim(ROLE, roles)
                 .withClaim(APP_NAME, appName)
+                .withClaim(USER_ID,id)
                 .withIssuer(ISSUER)
                 .withIssuedAt(new Date(System.currentTimeMillis()))
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION))
@@ -66,6 +68,16 @@ public class JwtTokenUtils {
             username = null;
         }
         return username;
+    }
+
+    public static int getUserId(String token) {
+        int userId;
+        try {
+            userId = getTokenBody(token).get(USER_ID).asInt();
+        } catch (Exception e) {
+            userId = -1;
+        }
+        return userId;
     }
 
     public static List<Role> getUserRole(String token) {
