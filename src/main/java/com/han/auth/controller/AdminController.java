@@ -27,8 +27,7 @@ public class AdminController {
         info.setUserId(user.getId())
                 .setUsername(user.getUsername())
                 .setAvatar("https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640")
-                .setRealName(user.getUsername())
-                .setRoles(userRoleService.getUserRole(user, appName));
+                .setRealName(user.getUsername());
         System.out.println(user.toString());
         return RestResponse.ok(info);
     }

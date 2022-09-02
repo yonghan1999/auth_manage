@@ -1,14 +1,11 @@
 package com.han.auth.response;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserInfo {
     private Integer userId;
     private String username;
     private String realName;
     private String avatar;
-    private Role roles;
 
     public Integer getUserId() {
         return userId;
@@ -43,16 +40,6 @@ public class UserInfo {
 
     public UserInfo setAvatar(String avatar) {
         this.avatar = avatar;
-        return this;
-    }
-
-    public Role getRoles() {
-        return roles;
-    }
-
-    public UserInfo setRoles(List<com.han.auth.entity.Role> roles) {
-        // TODO 和前端适配多角色
-        this.roles = new Role("User","user");
         return this;
     }
 }
