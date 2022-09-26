@@ -23,9 +23,14 @@ import java.util.Collections;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private static final String logoutApi = "/api/user/logout";
+
+    private static final String ignoreApi = "/register/**";
+
+    private static final String corsApi = "/api/**";
+
     @Configuration
     public static class SecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
-
 
         private final RestAuthenticationFailureHandler restAuthenticationFailureHandler;
         private final RestAuthenticationSuccessHandler restAuthenticationSuccessHandler;
@@ -65,7 +70,7 @@ public class SecurityConfig {
 
         @Override
         public void configure(WebSecurity web) throws Exception {
-            web.ignoring().antMatchers("/register/**");
+            web.ignoring().antMatchers(ignoreApi);
         }
 
         @Override
@@ -99,7 +104,7 @@ public class SecurityConfig {
                     .anyRequest().permitAll()
                     .and().exceptionHandling().accessDeniedHandler(restAccessDeniedHandler)
                     .and().formLogin().successHandler(restAuthenticationSuccessHandler).failureHandler(restAuthenticationFailureHandler)
-                    .and().logout().logoutUrl("/api/user/logout").logoutSuccessHandler(restLogoutSuccessHandler).invalidateHttpSession(true)
+                    .and().logout().logoutUrl(logoutApi).logoutSuccessHandler(restLogoutSuccessHandler).invalidateHttpSession(true)
                     .and().csrf().disable()
                     .cors();
         }
@@ -114,7 +119,7 @@ public class SecurityConfig {
             configuration.setAllowCredentials(true);
             configuration.setAllowedHeaders(Collections.singletonList("*"));
             final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-            source.registerCorsConfiguration("/api/**", configuration);
+            source.registerCorsConfiguration(corsApi, configuration);
             return source;
         }
 
