@@ -19,6 +19,9 @@ public class UserHandlerMethodArgumentResolver implements HandlerMethodArgumentR
     @Override
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
         String tokenHeader = nativeWebRequest.getHeader(JwtTokenUtils.TOKEN_HEADER);
+        if(tokenHeader == null) {
+            return null;
+        }
         String token = tokenHeader.replace(JwtTokenUtils.TOKEN_PREFIX, "");
         User user = new User();
         user.setId(JwtTokenUtils.getUserId(token));
