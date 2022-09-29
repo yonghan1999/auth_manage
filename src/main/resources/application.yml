@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://213.59.123.222/:3306/auth?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
-    username: auth
-    password: WZsyRkSEtWsbWSGF
+    url: jdbc:mysql://localhost:3306/auth?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+    username: root
+    password: 123456
 
     hikari:
       minimum-idle: 5

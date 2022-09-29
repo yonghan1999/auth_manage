@@ -1,23 +1,17 @@
 package com.han.auth.mapper;
 
-import com.han.auth.entity.AppRole;
+import com.han.auth.entity.AppRoleKey;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
 public interface AppRoleMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(AppRoleKey key);
 
-    int insert(AppRole record);
+    int insert(AppRoleKey record);
 
-    int insertSelective(AppRole record);
+    int insertSelective(AppRoleKey record);
 
-    AppRole selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(AppRole record);
-
-    int updateByPrimaryKey(AppRole record);
-
-    List<AppRole> getByAppId(Integer id);
+    List<AppRoleKey> getByAppId(Integer id);
 }

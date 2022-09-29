@@ -1,23 +1,17 @@
 package com.han.auth.mapper;
 
-import com.han.auth.entity.UserRole;
+import com.han.auth.entity.UserRoleKey;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
 public interface UserRoleMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(UserRoleKey key);
 
-    int insert(UserRole record);
+    int insert(UserRoleKey record);
 
-    int insertSelective(UserRole record);
+    int insertSelective(UserRoleKey record);
 
-    UserRole selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(UserRole record);
-
-    int updateByPrimaryKey(UserRole record);
-
-    List<UserRole> selectByUid(Integer id);
+    List<UserRoleKey> getUserRolesByUid(Integer id);
 }
