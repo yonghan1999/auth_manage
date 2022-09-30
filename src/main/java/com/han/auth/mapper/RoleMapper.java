@@ -25,5 +25,5 @@ public interface RoleMapper {
 
     List<AppRoleKey> getByAppId(Integer id);
 
-    List<UserRoleKey> getUserRolesByUid(Integer id);
+    List<Role> getUserRolesByUid(Integer id);
 }

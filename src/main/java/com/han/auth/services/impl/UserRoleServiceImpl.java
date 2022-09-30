@@ -38,10 +38,10 @@ public class UserRoleServiceImpl implements UserRoleService {
         }
         List<AppRoleKey> appRoles = roleMapper.getByAppId(app.getId());
         List<Integer> roleIdList = appRoles.stream().map(AppRoleKey::getRoleId).collect(Collectors.toList());
-        List<UserRoleKey> userRoleList = roleMapper.getUserRolesByUid(user.getId());
+        List<Role> userRoleList = roleMapper.getUserRolesByUid(user.getId());
         userRoleList.forEach(item -> {
-            if(roleIdList.contains(item.getRid())) {
-                roleList.add(roleMapper.selectByPrimaryKey(item.getRid()));
+            if(roleIdList.contains(item.getId())) {
+                roleList.add(roleMapper.selectByPrimaryKey(item.getId()));
             }
         });
         return roleList;
