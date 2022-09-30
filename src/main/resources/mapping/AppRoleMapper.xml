@@ -33,11 +33,4 @@
       </if>
     </trim>
   </insert>
-
-  <select id="getByAppId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from t_app_role
-    where app_id = #{appId,jdbcType=INTEGER}
-  </select>
 </mapper>

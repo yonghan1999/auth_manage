@@ -12,6 +12,4 @@ public interface AppRoleMapper {
     int insert(AppRoleKey record);
 
     int insertSelective(AppRoleKey record);
-
-    List<AppRoleKey> getByAppId(Integer id);
 }

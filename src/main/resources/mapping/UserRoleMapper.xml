@@ -33,11 +33,4 @@
       </if>
     </trim>
   </insert>
-
-  <select id="getUserRolesByUid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from t_user_role
-    where uid = #{uid,jdbcType=INTEGER}
-  </select>
 </mapper>

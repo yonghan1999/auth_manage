@@ -1,6 +1,8 @@
 package com.han.auth.mapper;
 
+import com.han.auth.entity.AppRoleKey;
 import com.han.auth.entity.Role;
+import com.han.auth.entity.UserRoleKey;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -20,4 +22,8 @@ public interface RoleMapper {
     int updateByPrimaryKey(Role record);
 
     List<Role> selectAll();
+
+    List<AppRoleKey> getByAppId(Integer id);
+
+    List<UserRoleKey> getUserRolesByUid(Integer id);
 }

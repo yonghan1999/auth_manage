@@ -3,6 +3,8 @@ package com.han.auth.mapper;
 import com.han.auth.entity.App;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface AppMapper {
     int deleteByPrimaryKey(Integer id);
@@ -18,4 +20,6 @@ public interface AppMapper {
     int updateByPrimaryKey(App record);
 
     App getByName(String appName);
+
+    List<App> listAll();
 }
