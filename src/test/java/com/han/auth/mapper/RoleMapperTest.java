@@ -22,7 +22,8 @@ public class RoleMapperTest {
 
     @Test
     void getByAppId() {
-
+        List<Role> res = roleMapper.getByAppId(1);
+        assert res != null && res.size() > 0;
     }
 
     @Test

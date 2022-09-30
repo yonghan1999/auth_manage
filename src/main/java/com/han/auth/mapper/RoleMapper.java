@@ -23,7 +23,7 @@ public interface RoleMapper {
 
     List<Role> selectAll();
 
-    List<AppRoleKey> getByAppId(Integer id);
+    List<Role> getByAppId(Integer id);
 
     List<Role> getUserRolesByUid(Integer id);
 }
