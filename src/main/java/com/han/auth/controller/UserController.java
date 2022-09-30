@@ -2,11 +2,13 @@ package com.han.auth.controller;
 
 
 import com.han.auth.base.RestResponse;
+import com.han.auth.base.annotation.AppName;
 import com.han.auth.base.annotation.CurrentUser;
 import com.han.auth.entity.User;
 import com.han.auth.request.user.RegisterByEmailRequest;
 import com.han.auth.response.user.RefreshTokenResponse;
 import com.han.auth.response.user.RegisterResponse;
+import com.han.auth.response.user.UserInfoResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,12 @@ public class UserController {
     @GetMapping("/token/refresh")
     public RestResponse<RefreshTokenResponse> refreshToken(@CurrentUser User currentUser) {
         // TODO
+        return null;
+    }
+
+    @Deprecated
+    @GetMapping("/info")
+    public RestResponse<UserInfoResponse> getUserInfo(@CurrentUser User user, @AppName String appName) {
         return null;
     }
 }
