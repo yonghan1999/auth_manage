@@ -2,18 +2,19 @@ package com.han.auth.controller;
 
 import com.han.auth.base.RestResponse;
 import com.han.auth.entity.App;
+import com.han.auth.entity.Role;
 import com.han.auth.request.permission.AddApp;
 import com.han.auth.request.permission.AddRole;
 import com.han.auth.request.permission.ListAppRequest;
 import com.han.auth.request.user.RegisterByEmailRequest;
 import com.han.auth.response.permission.AppInfo;
+import com.han.auth.response.permission.RoleInfo;
 import com.han.auth.response.user.RegisterResponse;
 import com.han.auth.services.AppService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.management.relation.RoleInfo;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,9 +70,16 @@ public class PermissionController {
     }
 
     @GetMapping("/role/list/{appId}")
-    public RestResponse<RoleInfo> appRoleList() {
+    public RestResponse<List<RoleInfo>> appRoleList(@PathVariable int appId) {
         // TODO list all app
-        return null;
+        List<Role> roleList = appService.getAppRoleList(appId);
+        List<RoleInfo> roleInfoList = new ArrayList<RoleInfo>();
+        for (Role role : roleList) {
+            RoleInfo roleInfo = new RoleInfo();
+            BeanUtils.copyProperties(role, roleInfo);
+            roleInfoList.add(roleInfo);
+        }
+        return RestResponse.ok(roleInfoList);
     }
 
     @PostMapping("/role/add")

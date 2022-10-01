@@ -1,6 +1,7 @@
 package com.han.auth.services;
 
 import com.han.auth.entity.App;
+import com.han.auth.entity.Role;
 
 import java.util.List;
 
@@ -12,4 +13,6 @@ public interface AppService {
     void deleteApp(int id);
 
     void editApp(App app);
+
+    List<Role> getAppRoleList(int appId);
 }
