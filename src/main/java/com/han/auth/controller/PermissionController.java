@@ -54,8 +54,8 @@ public class PermissionController {
 
     @DeleteMapping("/app/{id}")
     public RestResponse<Boolean> deleteApp(@PathVariable int id) {
-        // TODO delete app
-        return null;
+        appService.deleteApp(id);
+        return RestResponse.ok(true);
     }
 
     @PutMapping("/app/edit")

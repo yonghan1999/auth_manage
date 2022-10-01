@@ -29,4 +29,9 @@ public class AppServiceImpl implements AppService {
     public void addApp(App app) {
         appMapper.insert(app);
     }
+
+    @Override
+    public void deleteApp(int id) {
+        appMapper.deleteByPrimaryKey(id);
+    }
 }

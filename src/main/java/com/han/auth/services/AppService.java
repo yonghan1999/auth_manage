@@ -8,4 +8,6 @@ public interface AppService {
     List<App> getAppList(int pageIndex, int pageSize);
 
     void addApp(App app);
+
+    void deleteApp(int id);
 }
