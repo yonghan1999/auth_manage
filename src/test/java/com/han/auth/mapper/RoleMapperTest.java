@@ -28,6 +28,7 @@ public class RoleMapperTest {
 
     @Test
     void selectAll() {
-
+        List<Role> res = roleMapper.selectAll();
+        assert res != null && res.size() > 0;
     }
 }
