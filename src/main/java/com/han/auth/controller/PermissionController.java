@@ -59,9 +59,13 @@ public class PermissionController {
     }
 
     @PutMapping("/app/edit")
-    public RestResponse<AppInfo> editApp(@RequestBody AddApp appInfo) {
-        // TODO edit app
-        return null;
+    public RestResponse<AppInfo> editApp(@RequestBody AddApp editApp) {
+        App app = new App();
+        BeanUtils.copyProperties(editApp,app);
+        appService.editApp(app);
+        AppInfo appInfo = new AppInfo();
+        BeanUtils.copyProperties(app,appInfo);
+        return RestResponse.ok(appInfo);
     }
 
     @GetMapping("/role/list/{appId}")

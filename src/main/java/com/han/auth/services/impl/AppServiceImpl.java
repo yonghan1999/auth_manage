@@ -34,4 +34,9 @@ public class AppServiceImpl implements AppService {
     public void deleteApp(int id) {
         appMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public void editApp(App app) {
+        appMapper.updateByPrimaryKeySelective(app);
+    }
 }

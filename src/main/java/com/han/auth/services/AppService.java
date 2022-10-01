@@ -10,4 +10,6 @@ public interface AppService {
     void addApp(App app);
 
     void deleteApp(int id);
+
+    void editApp(App app);
 }
