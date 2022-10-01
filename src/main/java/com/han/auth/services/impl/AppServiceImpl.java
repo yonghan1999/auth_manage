@@ -24,4 +24,9 @@ public class AppServiceImpl implements AppService {
         PageHelper.startPage(pageIndex, pageSize);
         return appMapper.listAll();
     }
+
+    @Override
+    public void addApp(App app) {
+        appMapper.insert(app);
+    }
 }

@@ -28,7 +28,7 @@
     delete from t_app
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.han.auth.entity.App">
+  <insert id="insert" parameterType="com.han.auth.entity.App" useGeneratedKeys="true" keyProperty="id">
     insert into t_app (id, name, current_version, 
       current_code, support_version, support_code, 
       create_time)
@@ -36,7 +36,7 @@
       #{currentCode,jdbcType=VARCHAR}, #{supportVersion,jdbcType=VARCHAR}, #{supportCode,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.han.auth.entity.App">
+  <insert id="insertSelective" parameterType="com.han.auth.entity.App" useGeneratedKeys="true" keyProperty="id">
     insert into t_app
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

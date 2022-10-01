@@ -32,7 +32,6 @@ public class PermissionController {
 
     @GetMapping("/app/list/{pageIndex}")
     public RestResponse<List<AppInfo>> appList(@PathVariable int pageIndex) {
-        // TODO list all app
         List<App> appList = appService.getAppList(pageIndex,pageSize);
         List<AppInfo> appInfoList = new ArrayList<AppInfo>();
         for (App app : appList) {
@@ -44,9 +43,13 @@ public class PermissionController {
     }
 
     @PostMapping("/app/add")
-    public RestResponse<Boolean> addApp(@RequestBody AddApp appInfo) {
-        // TODO add app
-        return null;
+    public RestResponse<AppInfo> addApp(@RequestBody AddApp addApp) {
+        App app = new App();
+        BeanUtils.copyProperties(addApp,app);
+        appService.addApp(app);
+        AppInfo appInfo = new AppInfo();
+        BeanUtils.copyProperties(app,appInfo);
+        return RestResponse.ok(appInfo);
     }
 
     @DeleteMapping("/app/{id}")
@@ -56,7 +59,7 @@ public class PermissionController {
     }
 
     @PutMapping("/app/edit")
-    public RestResponse<AddApp> editApp(@RequestBody AddApp appInfo) {
+    public RestResponse<AppInfo> editApp(@RequestBody AddApp appInfo) {
         // TODO edit app
         return null;
     }
@@ -68,7 +71,7 @@ public class PermissionController {
     }
 
     @PostMapping("/role/add")
-    public RestResponse<Boolean> addRole(@RequestBody AddRole role) {
+    public RestResponse<RoleInfo> addRole(@RequestBody AddRole role) {
         // TODO add role
         return null;
     }
@@ -80,7 +83,7 @@ public class PermissionController {
     }
 
     @PutMapping("/role/edit")
-    public RestResponse<AddRole> editRole(@RequestBody AddRole role) {
+    public RestResponse<RoleInfo> editRole(@RequestBody AddRole role) {
         // TODO edit role
         return null;
     }
