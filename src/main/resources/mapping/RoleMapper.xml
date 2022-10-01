@@ -43,13 +43,13 @@
     delete from t_role
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.han.auth.entity.Role">
+  <insert id="insert" parameterType="com.han.auth.entity.Role" useGeneratedKeys="true" keyProperty="id">
     insert into t_role (id, name, path
       )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.han.auth.entity.Role">
+  <insert id="insertSelective" parameterType="com.han.auth.entity.Role" useGeneratedKeys="true" keyProperty="id">
     insert into t_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

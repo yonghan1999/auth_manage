@@ -5,12 +5,9 @@ import com.han.auth.entity.App;
 import com.han.auth.entity.Role;
 import com.han.auth.request.permission.AddApp;
 import com.han.auth.request.permission.AddRole;
-import com.han.auth.request.permission.ListAppRequest;
-import com.han.auth.request.user.RegisterByEmailRequest;
 import com.han.auth.response.permission.AppInfo;
 import com.han.auth.response.permission.RoleInfo;
-import com.han.auth.response.user.RegisterResponse;
-import com.han.auth.services.AppService;
+import com.han.auth.services.PermissionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,16 +21,16 @@ public class PermissionController {
 
     private static final int pageSize = 10;
 
-    private final AppService appService;
+    private final PermissionService permissionService;
 
     @Autowired
-    public PermissionController(AppService appService) {
-        this.appService = appService;
+    public PermissionController(PermissionService appService) {
+        this.permissionService = appService;
     }
 
     @GetMapping("/app/list/{pageIndex}")
     public RestResponse<List<AppInfo>> appList(@PathVariable int pageIndex) {
-        List<App> appList = appService.getAppList(pageIndex,pageSize);
+        List<App> appList = permissionService.getAppList(pageIndex,pageSize);
         List<AppInfo> appInfoList = new ArrayList<AppInfo>();
         for (App app : appList) {
             AppInfo appInfo = new AppInfo();
@@ -45,9 +42,10 @@ public class PermissionController {
 
     @PostMapping("/app/add")
     public RestResponse<AppInfo> addApp(@RequestBody AddApp addApp) {
+        addApp.setId(null);
         App app = new App();
         BeanUtils.copyProperties(addApp,app);
-        appService.addApp(app);
+        permissionService.addApp(app);
         AppInfo appInfo = new AppInfo();
         BeanUtils.copyProperties(app,appInfo);
         return RestResponse.ok(appInfo);
@@ -55,7 +53,7 @@ public class PermissionController {
 
     @DeleteMapping("/app/{id}")
     public RestResponse<Boolean> deleteApp(@PathVariable int id) {
-        appService.deleteApp(id);
+        permissionService.deleteApp(id);
         return RestResponse.ok(true);
     }
 
@@ -63,7 +61,7 @@ public class PermissionController {
     public RestResponse<AppInfo> editApp(@RequestBody AddApp editApp) {
         App app = new App();
         BeanUtils.copyProperties(editApp,app);
-        appService.editApp(app);
+        permissionService.editApp(app);
         AppInfo appInfo = new AppInfo();
         BeanUtils.copyProperties(app,appInfo);
         return RestResponse.ok(appInfo);
@@ -71,8 +69,7 @@ public class PermissionController {
 
     @GetMapping("/role/list/{appId}")
     public RestResponse<List<RoleInfo>> appRoleList(@PathVariable int appId) {
-        // TODO list all app
-        List<Role> roleList = appService.getAppRoleList(appId);
+        List<Role> roleList = permissionService.getAppRoleList(appId);
         List<RoleInfo> roleInfoList = new ArrayList<RoleInfo>();
         for (Role role : roleList) {
             RoleInfo roleInfo = new RoleInfo();
@@ -84,19 +81,28 @@ public class PermissionController {
 
     @PostMapping("/role/add")
     public RestResponse<RoleInfo> addRole(@RequestBody AddRole role) {
-        // TODO add role
-        return null;
+        role.setAppId(null);
+        Role r = new Role();
+        BeanUtils.copyProperties(role, r);
+        permissionService.addRole(r);
+        RoleInfo roleInfo = new RoleInfo();
+        BeanUtils.copyProperties(r, roleInfo);
+        return RestResponse.ok(roleInfo);
     }
 
     @DeleteMapping("/role/{id}")
     public RestResponse<Boolean> deleteRole(@PathVariable int id) {
-        // TODO delete role
-        return null;
+        permissionService.deleteRole(id);
+        return RestResponse.ok(true);
     }
 
     @PutMapping("/role/edit")
     public RestResponse<RoleInfo> editRole(@RequestBody AddRole role) {
-        // TODO edit role
-        return null;
+        Role r = new Role();
+        BeanUtils.copyProperties(role, r);
+        permissionService.editRole(r);
+        RoleInfo roleInfo = new RoleInfo();
+        BeanUtils.copyProperties(r, roleInfo);
+        return RestResponse.ok(roleInfo);
     }
 }

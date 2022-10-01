@@ -13,4 +13,5 @@ public interface UserRoleMapper {
 
     int insertSelective(UserRoleKey record);
 
+    int deleteByRoleId(int rid);
 }

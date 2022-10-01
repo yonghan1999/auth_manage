@@ -1,7 +1,7 @@
 package com.han.auth.service;
 
 import com.han.auth.entity.App;
-import com.han.auth.services.AppService;
+import com.han.auth.services.PermissionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +12,7 @@ import java.util.Date;
 public class AppServiceTest {
 
     @Autowired
-    AppService appService;
+    PermissionService appService;
 
     @Test
     void addApp() {

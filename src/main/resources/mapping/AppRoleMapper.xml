@@ -10,6 +10,10 @@
     where app_id = #{appId,jdbcType=INTEGER}
       and role_id = #{roleId,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByAppid" parameterType="java.lang.Integer">
+    delete from t_app_role
+    where app_id = #{appId,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.han.auth.entity.AppRoleKey">
     insert into t_app_role (app_id, role_id)
     values (#{appId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER})

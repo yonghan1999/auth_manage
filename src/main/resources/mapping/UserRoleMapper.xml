@@ -10,6 +10,10 @@
     where rid = #{rid,jdbcType=INTEGER}
       and uid = #{uid,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByRoleId" parameterType="java.lang.Integer">
+    delete from t_user_role
+    where rid = #{rid,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.han.auth.entity.UserRoleKey">
     insert into t_user_role (rid, uid)
     values (#{rid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER})

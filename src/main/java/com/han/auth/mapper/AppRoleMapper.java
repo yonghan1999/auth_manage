@@ -12,4 +12,6 @@ public interface AppRoleMapper {
     int insert(AppRoleKey record);
 
     int insertSelective(AppRoleKey record);
+
+    int deleteByAppid(int appId);
 }
