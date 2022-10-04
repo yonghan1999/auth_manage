@@ -18,6 +18,7 @@ public class AppNameHandlerMethodArgumentResolver implements HandlerMethodArgume
     @Override
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
         String tokenHeader = nativeWebRequest.getHeader(JwtTokenUtils.TOKEN_HEADER);
+        assert tokenHeader != null;
         String token = tokenHeader.replace(JwtTokenUtils.TOKEN_PREFIX, "");
         return JwtTokenUtils.getAppName(token);
     }

@@ -139,4 +139,14 @@ public class JwtTokenUtils {
     }
 
 
+    public static boolean valid(String token) {
+        JWTVerifier jwtVerifier = JWT.require(ALGORITHM).withIssuer(ISSUER).build();
+        try {
+            DecodedJWT decodedJWT = jwtVerifier.verify(token);
+            JWT.decode(token);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
 }
